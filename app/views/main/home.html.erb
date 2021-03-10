@@ -1,5 +1,3 @@
-<!-- <iframe src= https://api.mapbox.com/styles/v1/zcgqc/cklxud8l757yi17s5o4mccwo2.html?fresh=true&title=false&access_token=pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w /> -->
-
 <div id="map"></div>
 
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
@@ -11,24 +9,48 @@
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
+<pre id='display-coordinates' class='ui-coordinates'></pre>
+
 <script type="text/javascript">
+
+  var display_coords = document.getElementById('display-coordinates');
+  display_coords.innerHTML = 'CrimeEye';
+
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
   var map = new mapboxgl.Map({
     container: 'map',
     style: 'mapbox://styles/zcgqc/cklxud8l757yi17s5o4mccwo2',
     center: [-2.2, 54],
-    zoom: 5.0
+    zoom: 5.0,
+    attributionControl: false
+  });
+
+  // Track mouse coordinates
+  map.on('mousemove', function (e) {
+    document.getElementById('display-coordinates').innerHTML = 'Tracking cursor: <br />' + JSON.stringify(e.point) + '<br />' + JSON.stringify(e.lngLat.wrap());
   });
 
   // Add search box for locations
-  map.addControl(
-    new MapboxGeocoder({
-      accessToken: mapboxgl.accessToken,
-      mapboxgl: mapboxgl,
-      placeholder: 'Search for...'
-    })
-  );
+  var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    placeholder: 'Search for...'
+  });
+
+  map.addControl(geocoder);
+
+  geocoder.on('result', function(searchResult) {
+    removeAllCurrentMarkers();
+    var coordinates = searchResult.result.geometry.coordinates;
+    var lng = coordinates[0];
+    var lat = coordinates[1];
+
+    fetch('https://data.police.uk/api/crime-last-updated')
+      .then(response => response.json())
+      .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
+
+  });
 
   // Add map navigation controls
   map.addControl(
@@ -62,6 +84,7 @@
 
     if (isFound != true && user_coords != null) {
       isFound = true;
+      removeAllCurrentMarkers();
       getUserCoordinates(user_coords);
     }
   });
@@ -77,54 +100,6 @@
       .then(response => response.json())
       .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
   }
-
-
-  /*
-  var geojson = {
-  type: 'FeatureCollection',
-  features: [{
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      // In the order of: longitude, latitude
-      coordinates: [-0.1276, 51.5072569]
-    },
-    properties: {
-      title: 'London',
-      description: 'UK'
-    }
-  },
-  {
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      // In the order of: longitude, latitude
-      coordinates: [-0.565215, 51.23497]
-    },
-    properties: {
-      title: 'Guildford',
-      description: 'UK'
-    }
-  }]
-};
-
-
-// add markers to map
-geojson.features.forEach(function(marker) {
-
-  // create a HTML element for each feature
-  var el = document.createElement('div');
-  el.className = 'marker';
-
-  // make a marker for each feature and add to the map
-  new mapboxgl.Marker(el)
-  .setLngLat(marker.geometry.coordinates)
-  .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-    .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
-  .addTo(map);
-
-});
-*/
 
 </script>
 

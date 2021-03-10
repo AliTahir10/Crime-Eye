@@ -19,6 +19,8 @@ function fetchLocationAPI(apiURL) {
   .then(data => useAPIData(data));
 }
 
+var currentMarkers = [];
+
 function useAPIData(data) {
   for (i = 0; i < data.length; i++) {
 
@@ -61,11 +63,20 @@ function useAPIData(data) {
       el.className = 'marker';
 
       // make a marker for each feature and add to the map
-      new mapboxgl.Marker(el)
+      var marker = new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
         .setHTML('<h3>' + marker.properties.id + '</h3><p>' + marker.properties.crime_category + '</p><p>' + marker.properties.street + '</p><p>' + marker.properties.coordinates + '</p><p>' + marker.properties.outcome_status + '</p>'))
       .addTo(map);
+
+      currentMarkers.push(marker);
+
     });
+  }
+}
+
+function removeAllCurrentMarkers() {
+  for (i in currentMarkers) {
+    currentMarkers[i].remove();
   }
 }
