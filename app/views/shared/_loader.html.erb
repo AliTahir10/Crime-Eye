@@ -1,0 +1,10 @@
+<div class="loader">
+  <img src="<%= image_path('logo.gif') %>" alt="Loading...">
+  <script type="text/javascript">
+    window.addEventListener("turbolinks:load", function(){
+      const loader = document.querySelector(".loader");
+      loader.className += " hidden";
+    });
+
+  </script>
+</div>

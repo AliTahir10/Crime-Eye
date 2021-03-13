@@ -1,0 +1,103 @@
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+<pre id='display-coordinates' class='ui-coordinates'></pre>
+
+<script type="text/javascript">
+  var display_coords = document.getElementById('display-coordinates');
+  display_coords.innerHTML = 'CrimeEye';
+
+
+  mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
+  var map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/zcgqc/cklxud8l757yi17s5o4mccwo2',
+    center: [-2.2, 54],
+    zoom: 5.0,
+    attributionControl: false
+  });
+
+  // Track mouse coordinates
+  map.on('mousemove', function (e) {
+    document.getElementById('display-coordinates').innerHTML = 'Tracking cursor: <br />' + JSON.stringify(e.point) + '<br />' + JSON.stringify(e.lngLat.wrap());
+  });
+
+  // Add search box for locations
+  var geocoder = new MapboxGeocoder({
+    accessToken: mapboxgl.accessToken,
+    mapboxgl: mapboxgl,
+    placeholder: 'Search for...'
+  });
+
+  map.addControl(geocoder);
+
+  geocoder.on('result', function(searchResult) {
+    removeAllCurrentMarkers();
+    var coordinates = searchResult.result.geometry.coordinates;
+    var lng = coordinates[0];
+    var lat = coordinates[1];
+
+    fetch('https://data.police.uk/api/crime-last-updated')
+      .then(response => response.json())
+      .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
+
+  });
+
+  // Add map navigation controls
+  map.addControl(
+    new mapboxgl.NavigationControl()
+  );
+
+  // Add fullscreen button
+  map.addControl(
+    new mapboxgl.FullscreenControl()
+  );
+
+  // Add a user geolocator button (gets user's current location)
+  var geolocate = new mapboxgl.GeolocateControl({
+    positionOptions: {
+      enableHighAccuracy: true
+    },
+    trackUserLocation: true,
+    // showAccuracyCircle overrides markers popup if set to true
+    showAccuracyCircle: false
+  });
+
+  map.addControl(geolocate);
+
+  // Check if coordinates are already found as we only need to place the markers once
+  // Otherwise our marker function would be continuously executed (and therefore worsen peformance)
+  var isFound = false;
+  // Listens to user interactions via geolocator - This will repeat approximately every 5 seconds
+  geolocate.on('geolocate', function(user) {
+    //console.log(user.coords);
+    var user_coords = user.coords;
+
+    if (isFound != true && user_coords != null) {
+      isFound = true;
+      removeAllCurrentMarkers();
+      getUserCoordinates(user_coords);
+    }
+  });
+
+  // Gets users coordinates from geolocator interaction
+  function getUserCoordinates(obj) {
+    var lat = obj.latitude;
+    var lng = obj.longitude;
+
+    console.log(lat + ", " + lng);
+
+    fetch('https://data.police.uk/api/crime-last-updated')
+      .then(response => response.json())
+      .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
+  }
+
+</script>
+
+<%= javascript_include_tag 'jsonmarkers' %>

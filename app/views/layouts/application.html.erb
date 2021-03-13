@@ -10,6 +10,13 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div id="main">
+      <%= render "shared/loader" %>
+
+      <button class="openbtn" onclick="openNav()">☰</button>
+      <%= render "shared/sidebarnav" %>
+
+      <%= yield %>
+    </div>
   </body>
 </html>
