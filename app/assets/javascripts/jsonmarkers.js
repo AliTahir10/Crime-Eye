@@ -29,7 +29,8 @@ function useAPIData(data) {
     var id = data[i].id;
     var category = data[i].category;
     var street = data[i].location.street.name;
-    //var date = data[i]
+    var date = data[i].month;
+    console.log(date);
     var outcome;
 
     if (data[i].outcome_status != null) {
@@ -49,6 +50,7 @@ function useAPIData(data) {
       },
       properties: {
         id: "Crime id: " + id,
+        date: "<b>Date:</b> " + date,
         crime_category: "<b>Type of crime:</b> " + category,
         street: "<b>Location: </b>" + street,
         coordinates: "<b>Coordinates: </b>" + lng + ", " + lat,
@@ -67,7 +69,7 @@ function useAPIData(data) {
       var marker = new mapboxgl.Marker(el)
       .setLngLat(marker.geometry.coordinates)
       .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
-        .setHTML('<h3>' + marker.properties.id + '</h3><p>' + marker.properties.crime_category + '</p><p>' + marker.properties.street + '</p><p>' + marker.properties.coordinates + '</p><p>' + marker.properties.outcome_status + '</p>'))
+        .setHTML('<h3>' + marker.properties.id + '</h3><p>' + marker.properties.date + '</p><p>' + marker.properties.crime_category + '</p><p>' + marker.properties.street + '</p><p>' + marker.properties.coordinates + '</p><p>' + marker.properties.outcome_status + '</p>'))
       .addTo(map);
 
       currentMarkers.push(marker);
