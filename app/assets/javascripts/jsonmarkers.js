@@ -29,6 +29,7 @@ function useAPIData(data) {
     var id = data[i].id;
     var category = data[i].category;
     var street = data[i].location.street.name;
+    //var date = data[i]
     var outcome;
 
     if (data[i].outcome_status != null) {
