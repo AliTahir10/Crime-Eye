@@ -36,6 +36,123 @@ html {
   cursor: pointer;
 }
 
+.markerDrugs {
+  background-image: url('drugs.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerBurglary {
+  background-image: url('burglary.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerViolent {
+  background-image: url('violent-crime.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerAnti-social {
+  background-image: url('anti-social-behaviour.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerBicycle-theft {
+  background-image: url('bicycle-theft.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerCriminal-damage-arson {
+  background-image: url('criminal-damage-arson.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerOther-crime {
+  background-image: url('other-crime.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerOther-theft {
+  background-image: url('anti-social-behaviour.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerVehicle-crime {
+  background-image: url('vehicle-crime.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerRoberry {
+  background-image: url('robbery.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerShoplift {
+  background-image: url('shoplifting.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerTheft-from-person {
+  background-image: url('theft-from-.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.markerPublic-order {
+  background-image: url('public-order.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .mapboxgl-popup {
   max-width: 200px;
 }

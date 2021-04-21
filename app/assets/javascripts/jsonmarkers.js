@@ -54,7 +54,8 @@ function useAPIData(data) {
         crime_category: "<b>Type of crime:</b> " + category,
         street: "<b>Location: </b>" + street,
         coordinates: "<b>Coordinates: </b>" + lng + ", " + lat,
-        outcome_status: "<b>Outcome Status: </b>" + outcome
+        outcome_status: "<b>Outcome Status: </b>" + outcome,
+        category: category
       }
     }]
   };
@@ -63,7 +64,35 @@ function useAPIData(data) {
     geojson.features.forEach(function(marker) {
       // create a HTML element for each feature
       var el = document.createElement('div');
-      el.className = 'marker';
+      if (marker.properties.category == "violent-crime") {
+        el.classList.add("markerViolent");
+      } else if (marker.properties.category == "anti-social-behaviour") {
+        el.classList.add("markerAnti-social");
+      } else if (marker.properties.category == "drugs") {
+        el.classList.add("markerDrugs");
+      } else if (marker.properties.category == "burglary") {
+        el.classList.add("markerBurglary");
+      } else if (marker.properties.category == "robbery") {
+        el.classList.add("markerRoberry");
+      } else if (marker.properties.category == "criminal-damage-arson") {
+        el.classList.add("markerCriminal-damage-arson");
+      } else if (marker.properties.category == "theft-from-person") {
+        el.classList.add("markerTheft-from-person");
+      } else if (marker.properties.category == "shoplifting") {
+        el.classList.add("markerShoplift");
+      } else if (marker.properties.category == "possession-of-weapons") {
+        el.classList.add("markerPossession-of-weapons");
+      } else if (marker.properties.category == "vehicle-crime") {
+        el.classList.add("markerVehicle-crime");
+      } else if (marker.properties.category == "bicycle-theft") {
+        el.classList.add("markerBicycle-theft");
+      } else if (marker.properties.category == "other-crime") {
+        el.classList.add("markerOther-crime");
+      } else if (marker.properties.category == "other-theft") {
+        el.classList.add("markerOther-theft");
+      } else {
+        el.classList.add("marker");
+      }
 
       // make a marker for each feature and add to the map
       var marker = new mapboxgl.Marker(el)
