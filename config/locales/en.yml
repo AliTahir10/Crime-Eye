@@ -1,35 +1,50 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
+# Files in the config/locales directory are used for internationalization and are automatically loaded by Rails. If you want to use locales other than
+# English, add the necessary files in this directory.
 #
 # To use the locales, use `I18n.t`:
-#
 #     I18n.t 'hello'
 #
 # In views, this is aliased to just `t`:
-#
 #     <%= t('hello') %>
 #
 # To use a different locale, set it with `I18n.locale`:
-#
 #     I18n.locale = :es
-#
 # This would use the information in config/locales/es.yml.
 #
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
+# The following keys must be escaped otherwise they will not be retrieved by the default I18n backend:
 # true, false, on, off, yes, no
 #
 # Instead, surround them with single quotes.
-#
 # en:
 #   'true': 'foo'
 #
-# To learn more, please read the Rails Internationalization guide
-# available at http://guides.rubyonrails.org/i18n.html.
+# To learn more, please read the Rails Internationalization guide available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  app_name: "Crime Eye"
 
-  
+  about:
+    introduction_heading: "Introduction to CrimeEye"
+    introduction_text: "Crime Eye is a crime tracking website application that allows users to see crime data in local areas of the UK. Crime data is collected from
+    <a href="https://data.police.uk/docs/%22%3EPoliceAPI"></a>, our map is called from <a href="https://docs.mapbox.com/api/overview/%22%3EMapBoxAPI"></a>, and our
+    news feed comes from <a href="https://developer.twitter.com/en/docs/twitter-api%22%3ETwitter"></a> to provide real-time related news."
+    general_use_heading: "General Use"
+    general_use_text: "Crime data can be gathered by either searching for a specific location using the geocoder search bar or by using your local coordinates via the
+    geolocator. Markers are generated on the map which represent unique crime records and are interactable via clicking on them. Information related to this record will
+    be displayed in a popup information box containing properties such as the type of crime, location, coordinates, and the outcome status."
+    why_use_heading: "Why use CrimeEye?"
+    why_use_text: "CrimeEye is designed with the intention of allowing users to locally search their area or destination to see which areas are best avoided. We provide
+    data analysis on local areas that show which types of crimes are more prevalent than others, and will include the percentage of specific crimes, how often a specific
+    crime occurs, and the general outcomes of the crimes in a local area."
+
+  emergency:
+    emergency_heading: "Emergency Contacts"
+    report_crime_heading: "Report A Crime:"
+    report_crime_text: "Report a crime with Police UK <a href="https://www.police.uk/pu/contact-the-police/report-a-crime-incident/" target="_blank">here</a> and answer
+    the following questions to complete the online report. <br>If you are in need of immediate assistance, please call the relevant emergency conacts below."
+    emergency_numbers_heading: "Emergency Numbers:"
+    emergency_number_uk: "Emergency UK:"
+    non_emergency_medical_uk: "Non-Emergency Medical UK:"
+    emergency_international: "Emergency International:"
+    non_emergency_police_uk: "Non-Emergency Police UK:"
+    crime_stoppers: "Crime Stoppers:"
