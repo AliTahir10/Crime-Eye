@@ -6,4 +6,6 @@ Rails.application.routes.draw do
   get 'main/emergency'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'main#home'
+  root      'contact#index'
+  resources :contact, only: [:index, :new, :create]
 end

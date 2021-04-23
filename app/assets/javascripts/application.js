@@ -10,10 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require rails-ujs
-//= require activestorage
+//= require jquery
+//= require jquery_ujs
 //= require turbolinks
-//= stub jsonmarkers
+//= require bootstrap
 //= require_tree .
 
 /* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
@@ -26,4 +26,4 @@ function openNav() {
 function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft = "0";
-} 
+}
