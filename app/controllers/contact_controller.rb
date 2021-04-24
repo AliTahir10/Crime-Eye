@@ -1,21 +1,25 @@
 class ContactController < ApplicationController
   def index
-    @contact = Contact.new(params[:contact])
+    @contact = Contact.new
   end
 
   def create
-    @contact = Contact.new(params[:contact])
+    @contact = Contact.new(contact_params)
     @contact.request = request
-    respond_to do |format|
-      if @contact.deliver
-        # re-initialize Contact object for cleared form
-        @contact = Contact.new
-        format.html { render 'index' }
-        format.js   { flash.now[:success] = @message = "Thank you for your message. We'll get back to you soon!" }
-      else
-        format.html { render 'index' }
-        format.js   { flash.now[:error] = @message = "Message did not send." }
-      end
+
+    if @contact.deliver
+      # re-initialize Contact object for cleared form
+      @contact = Contact.new
+      flash.now[:notice] = "Thank you for your message. We'll get back to you soon!"
+      render 'index'
+    else
+      flash.now[:alert] = "Message did not send."
+      render 'index'
     end
+  end
+
+  private
+  def contact_params
+    params.require(:contact).permit(:name, :email, :message)
   end
 end

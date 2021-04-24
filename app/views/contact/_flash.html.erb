@@ -1,7 +1,0 @@
-<% flash.each do |message_type, message| %>
-  <% if message_type == 'success' %>
-    <%= content_tag(:div, message, class: 'alert alert-info') %>
-  <% else %>
-    <%= content_tag(:div, message, class: 'alert alert-warning') %>
-  <% end %>
-<% end %>
