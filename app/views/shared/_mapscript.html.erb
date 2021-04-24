@@ -8,10 +8,18 @@
 <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 <pre id='display-coordinates' class='ui-coordinates'></pre>
+<pre id='user-session' class='user-tracker'></pre>
 
 <script type="text/javascript">
   var display_coords = document.getElementById('display-coordinates');
   display_coords.innerHTML = 'CrimeEye';
+
+  var user_display_session = document.getElementById('user-session');
+  user_display_session.innerHTML = 'Welcome to CrimeEye!';
+
+  <% if Current.user %>
+    user_display_session.innerHTML = 'Logged in as: <%= Current.user.email %>'
+  <% end %>
 
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
