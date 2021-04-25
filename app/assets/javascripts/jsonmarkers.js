@@ -31,6 +31,7 @@ let crimeCategories = {
   "other-crime": "markerOther-crime",
   "other-theft": "markerOther-theft",
   "possession-of-weapons": "markerPossession-of-weapons",
+  "public-order": "markerPublic-order",
   "robbery": "markerRoberry",
   "shoplifting": "markerShoplift",
   "theft-from-the-person": "markerTheft-from-person",

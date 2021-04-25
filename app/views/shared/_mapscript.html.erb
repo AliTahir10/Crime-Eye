@@ -1,3 +1,4 @@
+<div id="flexContainer">
 <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 
@@ -98,6 +99,48 @@
       .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
   }
 
+  // stats script:
+
+  // Check latest crime data date
+  fetch('https://data.police.uk/api/crime-last-updated')
+    // parses JSON response into a JS object literal
+    .then(response => response.json())
+    // coordinates belong to Guildford area
+    .then(data => { displayDate(data); fetchLocationAPI(getLocationAPI('51.235', '-0.565', data.date)); });
+
+  function displayDate(data) {
+    var mainContainer = document.getElementById("myDate");
+    var p = document.createElement("p");
+    p.innerHTML = 'Latest Data: ' + data.date;
+    mainContainer.appendChild(p);
+  }
+
 </script>
+
+<div id="slideStats" class="statsbar">
+  <div class="content">
+  <a href="javascript:void(0)" class="statsClosebtn" onclick="closeStats()">×</a>
+  <div class="columnChart">
+    <%= column_chart(
+    "anti-social-behaviour":1,
+    "bicycle-theft":2,
+    "burglary":3,
+    "criminal-damage-arson":4,
+    "drugs":5,
+    "other-crime":6,
+    "other-theft": 7,
+    "possession-of-weapons":8,
+    "public-order":9,
+    "robbery":10,
+    "shoplifting":11,
+    "theft-from-the-person":12,
+    "vehicle-crime":13,
+    "violent-crime":14 ) %>
+  </div>
+  <div id="myDate"></div>
+  </div>
+</div>
+
+</div>
 
 <%= javascript_include_tag 'jsonmarkers' %>

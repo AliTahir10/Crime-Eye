@@ -1,0 +1,85 @@
+[33mcommit ab1b34595b6859e7b57c243ff540d3d63c7c0662[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Fri Apr 23 04:03:35 2021 +0100
+
+    Added crime category JS dictionary
+
+[33mcommit 3eb41dac42d6106dc0433c1d0ec9994219699940[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Wed Apr 21 19:14:40 2021 +0100
+
+    Fixed en.yml
+
+[33mcommit 34861bbe71e742eaf5292c7b57424bc48ed4b17f[m
+Merge: 85ad185 a03e3b4
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Wed Apr 21 17:52:48 2021 +0100
+
+    Merge branch 'master' of https://gitlab.eps.surrey.ac.uk/al00952/com2027-group-9-project
+
+[33mcommit 85ad18535f32e3672af2b285fa62b4443da612a9[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Wed Apr 21 17:41:19 2021 +0100
+
+    Added SVG Icons
+
+[33mcommit a03e3b40cb5625d05915a1f03de7cb3afc6c48f7[m
+Author: COM2034 <la00659@surrey.ac.uk>
+Date:   Mon Mar 29 04:59:17 2021 -0700
+
+    Added localization to About and Emergency pages.
+
+[33mcommit 551f72d64cc438f83305f920af143073b8ba5db3[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Fri Mar 19 15:45:57 2021 +0000
+
+    Added date to pointer
+
+[33mcommit 2df6145339f61a4ff8acdc6338e0bea04654a8cd[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Fri Mar 19 14:15:51 2021 +0000
+
+    Added emergency page
+
+[33mcommit 542007738a9bce670e6e58e829a1eeed51a2f95a[m
+Merge: e8e6811 9849d22
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Sat Mar 13 18:39:32 2021 +0000
+
+    Added loader & About view
+
+[33mcommit e8e68114c5ebcb022cd9c47868323e7413fe98f7[m
+Author: Almahdi, Tamim (UG - Computer Science) <ta00687@surrey.ac.uk>
+Date:   Sat Mar 13 16:48:22 2021 +0000
+
+    Separated map into new file
+
+[33mcommit 9849d22b3aef9f8a14036ea42600c849b233352e[m
+Author: Lee, Andy (UG - Computer Science) <al00952@surrey.ac.uk>
+Date:   Sat Mar 13 16:36:05 2021 +0000
+
+    Added sidebar nav
+
+[33mcommit d41abea2e00acca5f7a9a1ed343b87bba69d2063[m
+Author: Lee, Andy (UG - Computer Science) <al00952@surrey.ac.uk>
+Date:   Wed Mar 10 12:52:41 2021 +0000
+
+    Updated Mapbox API features
+
+[33mcommit 79610b2f6a65327115e932db5a335c8d51b74266[m
+Author: Lee, Andy (UG - Computer Science) <al00952@surrey.ac.uk>
+Date:   Mon Mar 8 18:38:59 2021 +0000
+
+    Added Mapbox API + JSON markers
+
+[33mcommit 798d93aac7fc1f7ee26e4b1510f2e9a76efde491[m
+Author: Lee, Andy (UG - Computer Science) <al00952@surrey.ac.uk>
+Date:   Wed Mar 3 14:27:36 2021 +0000
+
+    Added main controller
+
+[33mcommit 5c65dd9656ba509b6df690e479128289f3a3e3a0[m
+Author: Lee, Andy (UG - Computer Science) <al00952@surrey.ac.uk>
+Date:   Wed Mar 3 13:59:13 2021 +0000
+
+    Initial commit
