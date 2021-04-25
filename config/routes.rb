@@ -19,6 +19,6 @@ Rails.application.routes.draw do
   root 'main#home'
 
   #resources :contact, only: [:index, :new, :create]
-  get 'contact', to: 'contact#index'
-  post 'contact', to: 'contact#create'
+  get 'contact_us', to: 'contact#index'
+  post 'contact_us', to: 'contact#create'
 end
