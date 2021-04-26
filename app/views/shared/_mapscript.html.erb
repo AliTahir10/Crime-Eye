@@ -12,13 +12,13 @@
 
 <script type="text/javascript">
   var display_coords = document.getElementById('display-coordinates');
-  display_coords.innerHTML = 'CrimeEye';
+  display_coords.innerHTML = 'Loading...';
 
   var user_display_session = document.getElementById('user-session');
   user_display_session.innerHTML = 'Welcome to CrimeEye!';
 
   <% if Current.user %>
-    user_display_session.innerHTML = 'Logged in as: <%= Current.user.email %>'
+    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.user.email, account_path %>'
   <% end %>
 
 

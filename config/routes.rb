@@ -13,12 +13,20 @@ Rails.application.routes.draw do
 
   get 'login', to: 'session#new'
   post 'login', to: 'session#create'
-
   delete 'logout', to: 'session#destroy'
+
+  get 'password', to: 'password#edit', as: :edit_password
+  patch 'password', to: 'password#update'
+  get 'password/reset', to: 'password#new', as: :reset_password
+  post 'password/reset', to: 'password#create'
+  # Mailer functions
+  get 'password/reset/edit', to: 'password#mailer_edit'
+  patch 'password/reset/edit', to: 'password#mailer_update'
+
+  get 'account', to: 'session#account'
 
   root 'main#home'
 
-  #resources :contact, only: [:index, :new, :create]
   get 'contact_us', to: 'contact#index'
   post 'contact_us', to: 'contact#create'
 end

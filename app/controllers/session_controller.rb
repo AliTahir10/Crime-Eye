@@ -1,4 +1,5 @@
 class SessionController < ApplicationController
+  before_action :require_user_is_logged_in, only: [:account]
 
   def new
   end
@@ -20,6 +21,10 @@ class SessionController < ApplicationController
   # Logs out the user in current session
   def destroy
     session[:user_id] = nil
-    redirect_to root_path, notice: "You've logged out."
+    redirect_to login_path, notice: "You've logged out."
   end
+
+  def account
+  end
+
 end

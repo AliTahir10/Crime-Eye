@@ -1,0 +1,13 @@
+<h1>Forgotten your password?</h1>
+<hr>
+
+<%= form_with url: reset_password_path, local: true do |form| %>
+  <div class="mb-3">
+    <%= form.label :email %>
+    <%= form.text_field :email, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.submit "Reset Password", class: "btn btn-primary" %>
+  </div>
+<% end %>
