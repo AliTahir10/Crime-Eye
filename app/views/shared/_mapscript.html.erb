@@ -117,6 +117,55 @@
 
   // Stats Script:
 
+  var barLabels = [
+  "anti-social-behaviour",
+  "bicycle-theft",
+  "burglary",
+  "criminal-damage-arson",
+  "drugs",
+  "other-crime",
+  "other-theft",
+  "posession-of-weapons",
+  "public-order",
+  "robbery",
+  "shoplifting",
+  "theft-from-person",
+  "vehicle-crime",
+  "violent-crime"
+  ];
+  var barColors = [
+    'rgba(255, 99, 132, 0.2)',
+    'rgba(255, 159, 64, 0.2)',
+    'rgba(255, 205, 86, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(54, 162, 235, 0.2)',
+    'rgba(214, 0, 61, 0.2)',
+    'rgba(201, 203, 207, 0.2)',
+    'rgba(75, 192, 192, 0.2)',
+    'rgba(255, 205, 86, 0.2)',
+    'rgba(168, 219, 0, 0.2)',
+    'rgba(153, 102, 255, 0.2)',
+    'rgba(230, 39, 255, 0.2)',
+    'rgba(21, 189, 55, 0.2)',
+    'rgba(255, 119, 0, 0.2)'
+    ];
+  var barBorderColors = [
+    'rgb(255, 99, 132)',
+    'rgb(255, 159, 64)',
+    'rgb(255, 205, 86)',
+    'rgb(75, 192, 192)',
+    'rgb(54, 162, 235)',
+    'rgb(153, 102, 255)',
+    'rgb(201, 203, 207)',
+    'rgb(75, 192, 192)',
+    'rgb(255, 205, 86)',
+    'rgb(168, 219, 0)',
+    'rgb(153, 102, 255)',
+    'rgb(230, 39, 255)',
+    'rgb(21, 189, 55)',
+    'rgb(255, 119, 0)'
+    ];
+
   // Check latest crime data date
   fetch('https://data.police.uk/api/crime-last-updated')
     // parses JSON response into a JS object literal
@@ -130,28 +179,35 @@
     mainContainer.appendChild(p);
   }
 
-  function clearGraph() {
-    var chart = document.getElementById('barChart').getContext('2d');
-  }
-
   //Stats Charts
   function refreshGraph() {
     var barData = [
       categoryCrimeCount[0][1],
       categoryCrimeCount[1][1],
-      categoryCrimeCount[2][1]];
-    var barLabels = ["anti-social-behaviour", "bicycle-theft", "burglary"];
-    var barColors = [
-      'rgba(255, 99, 132, 0.2)',
-      'rgba(255, 159, 64, 0.2)',
-      'rgba(255, 205, 86, 0.2)'];
-    var barBorderColors = [
-      'rgb(255, 99, 132)',
-      'rgb(255, 159, 64)',
-      'rgb(255, 205, 86)'];
+      categoryCrimeCount[2][1],
+      categoryCrimeCount[3][1],
+      categoryCrimeCount[4][1],
+      categoryCrimeCount[5][1],
+      categoryCrimeCount[6][1],
+      categoryCrimeCount[7][1],
+      categoryCrimeCount[8][1],
+      categoryCrimeCount[9][1],
+      categoryCrimeCount[10][1],
+      categoryCrimeCount[11][1],
+      categoryCrimeCount[12][1],
+      categoryCrimeCount[13][1]
+      ];
 
-    var chart = document.getElementById('barChart').getContext('2d');
-    var barChart = new Chart(chart, {
+    var canvasWrapper = document.getElementById("canvasWrapper");
+    canvasWrapper.innerHTML = '';
+
+    // bar chart
+    var barCanvas = document.createElement('canvas');
+    barCanvas.setAttribute('width', 400);
+    barCanvas.setAttribute('height', 250);
+    barCanvas.setAttribute('id', "barChart");
+    canvasWrapper.appendChild(barCanvas);
+    var barChart = new Chart(barCanvas, {
       type: 'bar',
       data:{
         labels: barLabels,
@@ -183,6 +239,9 @@
         }
       }
     });
+
+    // doughnut chart
+
   }
 
 </script>
