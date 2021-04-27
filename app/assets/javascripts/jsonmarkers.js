@@ -127,7 +127,7 @@ function useAPIData(data) {
       outcomeCrimeCount[3][1]++;
     } else if (outcome == outcomeCrimeCount[4][0]) {
       outcomeCrimeCount[4][1]++;
-    }
+    } 
 
     var geojson = {
     type: 'FeatureCollection',
