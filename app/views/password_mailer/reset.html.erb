@@ -1,0 +1,8 @@
+Hello <%= @user.email %>,
+
+Here's the password reset link you requested:
+<%= link_to "Reset your password", password_reset_edit_url(token: @token) %>
+This link will automatically expire in 15 minutes.
+
+If this was not you, don't worry.
+But we would advise you to change your current password if these messages persist.

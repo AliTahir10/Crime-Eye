@@ -24,24 +24,30 @@ en:
 
   app_name: 'CrimeEye'
   introduction_heading: 'Introduction to CrimeEye'
-  introduction_text: 'Crime Eye is a crime tracking website application that allows users to see crime data in local areas of the UK. Crime data is collected from
-  <a href="https://data.police.uk/docs/%22%3EPoliceAPI"></a>, our map is called from <a href="https://docs.mapbox.com/api/overview/%22%3EMapBoxAPI"></a>, and our
-  news feed comes from <a href="https://developer.twitter.com/en/docs/twitter-api%22%3ETwitter"></a> to provide real-time related news.'
+  introduction_text: 'CrimeEye is a UK crime tracking website that allows users to check how populated different crimes are in different neighbouring areas. UK crime data is collected from
+  <a href="https://data.police.uk/docs/%22%3EPoliceAPI">PoliceAPI</a> which is made freely accessible to the public, our map is built from <a href="https://docs.mapbox.com/api/overview/%22%3EMapBoxAPI">MapBox</a>
+  to provide users an interactive and searchable map, and anything twitter related is used with <a href="https://developer.twitter.com/en/docs/twitter-api%22%3ETwitter">TwitterAPI</a>.'
   general_use_heading: 'General Use'
-  general_use_text: 'Crime data can be gathered by either searching for a specific location using the geocoder search bar or by using your local coordinates via the
-  geolocator. Markers are generated on the map which represent unique crime records and are interactable via clicking on them. Information related to this record will
-  be displayed in a popup information box containing properties such as the type of crime, location, coordinates, and the outcome status.'
+  general_use_text: 'CrimeEye is used to convey specific, helpful information related to crime in UK areas you search for or for finding crimes in your local area. Users are able to create an account to
+  further tailor their experience, which can include linking their twitter account, and show information relevant to them.'
+  general_use_disclaimer: 'Disclaimer notice: We strongly do not encourage users to actively seekout crime in real-life and therefore take no reponsibility in the outcomes of personal injuries or liabilites with the usage
+  of this website.'
   why_use_heading: 'Why use CrimeEye?'
-  why_use_text: 'CrimeEye is designed with the intention of allowing users to locally search their area or destination to see which areas are best avoided. We provide
-  data analysis on local areas that show which types of crimes are more prevalent than others, and will include the percentage of specific crimes, how often a specific
-  crime occurs, and the general outcomes of the crimes in a local area.'
+  why_use_text: 'CrimeEye aims to assist users with up-to-date crime data gathering, we want to provide in-depth awareness in statistical crime analysis through the usage of data analysis, including but not limited to: visual graphs displaying
+  popular and tracked crimes, map coordinates of previous crime locations, legal outcomes of individual witness reports, news associated with recent crimes etc. '
+  author_heading: 'Who made this website?'
+  author_list: 'CrimeEye is made by a team of students in the UK as part of our university project:'
+  authors: '<li>Andy Lee</li><li>Ali Tahir</li><li>Louise Arthur</li><li>Louis Dineen</li><li>Namanpreet Ghotra</li><li>Nikola Delchev</li><li>Tamim Almahdi</li>'
+  author_note: 'Stay safe and have a pleasant stay!'
 
   main:
     emergency:
       emergency_heading: 'Emergency Contacts'
-      report_crime_heading: 'Report A Crime:'
-      report_crime_text: 'Report a crime with Police UK <a href="https://www.police.uk/pu/contact-the-police/report-a-crime-incident/" target="_blank">here</a> and answer
-      the following questions to complete the online report. <br>If you are in need of immediate assistance, please call the relevant emergency conacts below.'
+      report_crime_heading: 'Help your local area'
+      report_crime_text: 'If you witnessed a crime, you should report it to the <a href="https://www.police.uk/pu/contact-the-police/report-a-crime-incident/" target="_blank">Official UK Police website</a> and provide as much
+      relevant information as possible.'
+      report_crime_contact: 'If you are in need of immediate assistance, please call the relevant national emergency contacts below: <br> Note: If you are on a mobile phone, touching on the phone numbers will automatically call
+      the service for you.'
       emergency_numbers_heading: 'Emergency Numbers:'
       emergency_number_uk: 'Emergency UK: <a href="tel:999">999</a>'
       non_emergency_medical_uk: 'Non-Emergency Medical UK: <a href="tel:111">111</a>'

@@ -1,3 +1,7 @@
+// Global Varaibles
+var currentMarkers = [];
+var categoryCrimeCount = [];
+
 // Check latest crime data date
 fetch('https://data.police.uk/api/crime-last-updated')
   // parses JSON response into a JS object literal
@@ -16,10 +20,58 @@ function getLocationAPI(lat, lng, date) {
 function fetchLocationAPI(apiURL) {
   fetch(apiURL)
   .then(response => response.json())
-  .then(data => useAPIData(data));
+  .then(data => {useAPIData(data); countCategoryCrimes(data); refreshGraph();});
 }
 
-var currentMarkers = [];
+function countCategoryCrimes(data) {
+  categoryCrimeCount = [
+  ['anti-social-behaviour', 0],
+  ['bicycle-theft', 0],
+  ['burglary', 0],
+  ['criminal-damage-arson', 0],
+  ['drugs', 0],
+  ['other-crime', 0],
+  ['other-theft', 0],
+  ['posession-of-weapons', 0],
+  ['public-order', 0],
+  ['robbery', 0],
+  ['shoplifting', 0],
+  ['theft-from-person', 0],
+  ['vehicle-crime', 0],
+  ['violent-crime', 0] ];
+
+  for (i = 0; i < data.length; i++) {
+    if (data[i].category == categoryCrimeCount[0][0]) {
+      categoryCrimeCount[0][1]++;
+    } else if (data[i].cateogry == categoryCrimeCount[1][0]) {
+      categoryCrimeCount[1][1]++;
+    } else if (data[i].category == categoryCrimeCount[2][0]) {
+      categoryCrimeCount[2][1]++;
+    } else if (data[i].category == categoryCrimeCount[3][0]) {
+      categoryCrimeCount[3][1]++;
+    } else if (data[i].category == categoryCrimeCount[4][0]) {
+      categoryCrimeCount[4][1]++;
+    } else if (data[i].category == categoryCrimeCount[5][0]) {
+      categoryCrimeCount[5][1]++;
+    } else if (data[i].cateogry == categoryCrimeCount[6][0]) {
+      categoryCrimeCount[6][1]++;
+    } else if (data[i].cateogry == categoryCrimeCount[7][0]) {
+      categoryCrimeCount[7][1]++;
+    } else if (data[i].category == categoryCrimeCount[8][0]) {
+      categoryCrimeCount[8][1]++;
+    } else if (data[i].category == categoryCrimeCount[9][0]) {
+      categoryCrimeCount[9][1]++;
+    } else if (data[i].category == categoryCrimeCount[10][0]) {
+      categoryCrimeCount[10][1]++;
+    } else if (data[i].category == categoryCrimeCount[11][0]) {
+      categoryCrimeCount[11][1]++;
+    } else if (data[i].category == categoryCrimeCount[12][0]) {
+      categoryCrimeCount[12][1]++;
+    } else {
+      categoryCrimeCount[13][1]++;
+    }
+  }
+}
 
 // define a dictionary for crime category to css class name
 let crimeCategories = {

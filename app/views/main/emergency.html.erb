@@ -1,18 +1,18 @@
-<div id="container">
-  <h1><%= t('.emergency_heading') %></h1>
+<h1><%= t('.emergency_heading') %></h1>
 
-  <h3><%= t('.report_crime_heading') %></h3>
-  <p><%= raw t('.report_crime_text')%></p><br>
+<hr>
+<h3><%= t('.report_crime_heading') %></h3>
+<hr>
+<p><%= raw t('.report_crime_text')%></p>
 
-  <h3><%= t('.emergency_numbers_heading') %></h3>
-  <p><%= raw t('.emergency_number_uk') %> </p>
-
-  <p><%= raw t('.non_emergency_medical_uk') %> </p>
-
-  <p><%= raw t('.emergency_international') %> </p>
-
-  <p><%= raw t('.non_emergency_police_uk') %> </p>
-
-  <p><%= raw t('.crime_stoppers') %> </p>
-
-</div>
+<hr>
+<h3><%= t('.emergency_numbers_heading') %></h3>
+<hr>
+<p class="font-italic"><%= raw t('.report_crime_contact')%></p>
+<ul>
+  <li><%= raw t('.emergency_number_uk') %></li>
+  <li><%= raw t('.non_emergency_medical_uk') %></li>
+  <li><%= raw t('.emergency_international') %></li>
+  <li><%= raw t('.non_emergency_police_uk') %></li>
+  <li><%= raw t('.crime_stoppers') %></li>
+</ul>

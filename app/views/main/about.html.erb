@@ -1,12 +1,26 @@
-<div id="container">
-  <h1><%= t('app_name') %></h1>
+<h1><%= t('app_name') %></h1>
 
-  <h3><%= t('introduction_heading') %> </h3>
-  <p><%= raw t('introduction_text') %> </p>
+<hr>
+<h3><%= t('introduction_heading') %></h3>
+<hr>
+<p><%= raw t('introduction_text') %></p>
 
-  <h3><%= t('general_use_heading') %> </h3>
-  <p><%= t('general_use_text') %> </p>
+<hr>
+<h3><%= t('general_use_heading') %></h3>
+<hr>
+<p><%= t('general_use_text') %></p>
+<p class='font-italic'><%= t('general_use_disclaimer') %></p>
 
-  <h3><%= t('why_use_heading') %> </h3>
-  <p><%= t('why_use_text') %> </p>
-</div>
+<hr>
+<h3><%= t('why_use_heading') %></h3>
+<hr>
+<p><%= t('why_use_text') %></p>
+
+<hr>
+<h3><%= t('author_heading') %></h3>
+<hr>
+<p><%= t('author_list') %></p>
+<ul>
+  <%= raw t('authors') %>
+</ul>
+<p><%= t('author_note') %></p>

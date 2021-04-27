@@ -1,5 +1,10 @@
 class MainController < ApplicationController
-  def home; end
+  before_action :disable_flash_messages, only: [:home]
 
-  def about; end
+  def home
+  end
+
+  def about
+  end
+
 end

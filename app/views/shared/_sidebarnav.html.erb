@@ -1,7 +1,16 @@
 <div id="mySidebar" class="sidebar">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  <a href="<%= root_path%>">Map</a>
-  <a href="<%= main_about_path %>">About</a>
-  <a href="<%= main_emergency_path %>">Emergency</a>
-  <a href="<%= json_police_api_path %>">Data</a>
+  <%= link_to "Map", root_path %>
+  <%= link_to "About", main_about_path %>
+  <%= link_to "Emergency", main_emergency_path %>
+  <%= link_to "Data", json_police_api_path %>
+  <%= link_to "Contact Us", contact_us_path %>
+
+  <% if Current.user %>
+  <%= link_to "My Account", account_path %>
+  <%= link_to "Logout", logout_path, method: :delete %>
+  <% else %>
+  <%= link_to "Login", login_path %>
+  <%= link_to "Sign-Up", sign_up_path %>
+  <% end %>
 </div>

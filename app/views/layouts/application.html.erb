@@ -7,17 +7,20 @@
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
     <div id="main">
-      <%= render "shared/loader" %>
 
       <button class="openbtn" onclick="openNav()">☰</button>
-      <button class="statsOpenbtn" onclick="openStats()">❯</button>
       <%= render "shared/sidebarnav" %>
 
-      <%= yield %>
+      <div class="container mt-4">
+        <%= render "shared/flashmessages" unless @disable_flash_messages %>
+        <%= render "shared/sidebarnav" %>
+        <%= yield %>
+      </div>
     </div>
   </body>
 </html>

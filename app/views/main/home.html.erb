@@ -1,3 +1,14 @@
 <div id="map"></div>
+<button class="statsOpenbtn" onclick="openStats()">❯</button>
+<div id="slideStats" class="statsbar">
+  <div class="content">
+    <div class="statsClose">
+      <a href="javascript:void(0)" class="statsClosebtn" onclick="closeStats()">❰</a>
+    </div>
+    <canvas id="barChart" width="400" height="250"></canvas>
+    <div id="myDate" class="statsDate"></div>
+  </div>
+</div>
 
+<%= render "shared/loader" %>
 <%= render "shared/mapscript" %>

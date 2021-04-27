@@ -1,18 +1,31 @@
-<div id="flexContainer">
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+<%= javascript_include_tag 'jsonmarkers' %>
 
-<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
-<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<div id="mapContainer">
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 
-<pre id='display-coordinates' class='ui-coordinates'></pre>
+  <!-- Chart.js  -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css" type="text/css">
+  <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+
+  <pre id='display-coordinates' class='ui-coordinates'></pre>
+  <pre id='user-session' class='user-tracker'></pre>
 
 <script type="text/javascript">
   var display_coords = document.getElementById('display-coordinates');
-  display_coords.innerHTML = 'CrimeEye';
+  display_coords.innerHTML = 'Loading...';
+
+  var user_display_session = document.getElementById('user-session');
+  user_display_session.innerHTML = 'Welcome to CrimeEye!';
+
+  <% if Current.user %>
+    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.user.email, account_path %>'
+  <% end %>
 
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
@@ -46,8 +59,9 @@
 
     fetch('https://data.police.uk/api/crime-last-updated')
       .then(response => response.json())
-      .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
+      .then(data => { fetchLocationAPI(getLocationAPI(lat, lng, data.date)); });
 
+    console.log(categoryCrimeCount[0][1].toString);
   });
 
   // Add map navigation controls
@@ -99,48 +113,77 @@
       .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
   }
 
-  // stats script:
+//------------------------------------------------------------------------------
+
+  // Stats Script:
 
   // Check latest crime data date
   fetch('https://data.police.uk/api/crime-last-updated')
     // parses JSON response into a JS object literal
     .then(response => response.json())
-    // coordinates belong to Guildford area
-    .then(data => { displayDate(data); fetchLocationAPI(getLocationAPI('51.235', '-0.565', data.date)); });
+    .then(data => { displayDate(data); });
 
   function displayDate(data) {
     var mainContainer = document.getElementById("myDate");
-    var p = document.createElement("p");
-    p.innerHTML = 'Latest Data: ' + data.date;
+    var p = document.createElement("div");
+    p.innerHTML = 'Last updated: ' + data.date;
     mainContainer.appendChild(p);
   }
 
+  function clearGraph() {
+    var chart = document.getElementById('barChart').getContext('2d');
+  }
+
+  //Stats Charts
+  function refreshGraph() {
+    var barData = [
+      categoryCrimeCount[0][1],
+      categoryCrimeCount[1][1],
+      categoryCrimeCount[2][1]];
+    var barLabels = ["anti-social-behaviour", "bicycle-theft", "burglary"];
+    var barColors = [
+      'rgba(255, 99, 132, 0.2)',
+      'rgba(255, 159, 64, 0.2)',
+      'rgba(255, 205, 86, 0.2)'];
+    var barBorderColors = [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)'];
+
+    var chart = document.getElementById('barChart').getContext('2d');
+    var barChart = new Chart(chart, {
+      type: 'bar',
+      data:{
+        labels: barLabels,
+        datasets: [{
+          data: barData,
+          backgroundColor: barColors,
+          borderColor: barBorderColors,
+          color: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        title: {
+          text: "Crime Counts",
+          display: true
+        },
+        legend: {
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+                beginAtZero:true
+            }
+        }]
+        }
+      }
+    });
+  }
+
 </script>
-
-<div id="slideStats" class="statsbar">
-  <div class="content">
-  <a href="javascript:void(0)" class="statsClosebtn" onclick="closeStats()">×</a>
-  <div class="columnChart">
-    <%= column_chart(
-    "anti-social-behaviour":1,
-    "bicycle-theft":2,
-    "burglary":3,
-    "criminal-damage-arson":4,
-    "drugs":5,
-    "other-crime":6,
-    "other-theft": 7,
-    "possession-of-weapons":8,
-    "public-order":9,
-    "robbery":10,
-    "shoplifting":11,
-    "theft-from-the-person":12,
-    "vehicle-crime":13,
-    "violent-crime":14 ) %>
-  </div>
-  <div id="myDate"></div>
-  </div>
 </div>
-
-</div>
-
-<%= javascript_include_tag 'jsonmarkers' %>
