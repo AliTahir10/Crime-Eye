@@ -1,16 +1,19 @@
 <div id="mySidebar" class="sidebar">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
-  <%= link_to "Map", root_path %>
-  <%= link_to "About", main_about_path %>
-  <%= link_to "Emergency", main_emergency_path %>
-  <%= link_to "Data", json_police_api_path %>
-  <%= link_to "Contact Us", contact_us_path %>
-
-  <% if Current.user %>
-  <%= link_to "My Account", account_path %>
-  <%= link_to "Logout", logout_path, method: :delete %>
-  <% else %>
-  <%= link_to "Login", login_path %>
-  <%= link_to "Sign-Up", sign_up_path %>
-  <% end %>
+  <div id="menu">
+      <ul>
+      <li><%= link_to "Map", root_path, class: "link" %></li>
+      <li><%= link_to "About", main_about_path, class: "link" %></li>
+      <li><%= link_to "Emergency", main_emergency_path, class: "link" %></li>
+      <li><%= link_to "Data", json_police_api_path, class: "link" %></li>
+      <li><%= link_to "Contact Us", contact_us_path, class: "link" %></li>
+      <% if Current.user %>
+        <li><%= link_to "My Account", account_path, class: "link" %></li>
+        <li><%= link_to "Logout", logout_path, method: :delete, class: "link" %></li>
+      <% else %>
+        <li><%= link_to "Login", login_path, class: "link" %></li>
+        <li><%= link_to "Sign-Up", sign_up_path, class: "link" %></li>
+      <% end %>
+    </ul>
+  </div>
 </div>

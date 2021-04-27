@@ -51,6 +51,17 @@
    margin-left: 50px;
  }
 
+ .sidebar ul {
+   list-style-type: none;
+   margin: 0;
+   padding: 0;
+ }
+
+ .sidebar .active {
+   color: #333;
+   background-color: #9EB1B4;
+ }
+
  /* The button used to open the sidebar */
  .openbtn {
    font-size: 20px;
