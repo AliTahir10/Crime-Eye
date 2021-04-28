@@ -234,7 +234,7 @@ pre.user-tracker {
 .statsbar .statsClosebtn {
   position: absolute;
   top: 0;
-  right: 25px;
+  right: 10px;
   font-size: 36px;
   margin-left: 50px;
 }
@@ -242,7 +242,7 @@ pre.user-tracker {
 .statsOpenbtn {
   font-size: 20px;
   cursor: pointer;
-  background-color: #364446;
+  background:rgba(0,0,0,0.5);
   color: white;
   padding: 10px 15px;
   border: none;

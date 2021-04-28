@@ -1,6 +1,7 @@
 // Global Varaibles
 var currentMarkers = [];
 var categoryCrimeCount = [];
+var outcomeCrimeCount = [];
 
 // Check latest crime data date
 fetch('https://data.police.uk/api/crime-last-updated')
@@ -92,8 +93,15 @@ let crimeCategories = {
 };
 
 function useAPIData(data) {
-  for (i = 0; i < data.length; i++) {
+  outcomeCrimeCount = [
+    ["Awaiting court outcome", 0],
+    ["Investigation complete; no suspect identified", 0],
+    ["Under investigation", 0],
+    ["Local resolution", 0],
+    ["Unknown", 0]
+  ];
 
+  for (i = 0; i < data.length; i++) {
     var lng = data[i].location.longitude;
     var lat = data[i].location.latitude;
     var id = data[i].id;
@@ -106,8 +114,20 @@ function useAPIData(data) {
     if (data[i].outcome_status != null) {
       outcome = data[i].outcome_status.category;
     } else {
-      outcome = "unknown";
+      outcome = "Unknown";
     }
+
+    if (outcome == outcomeCrimeCount[0][0]) {
+      outcomeCrimeCount[0][1]++;
+    } else if (outcome == outcomeCrimeCount[1][0]) {
+      outcomeCrimeCount[1][1]++;
+    } else if (outcome == outcomeCrimeCount[2][0]) {
+      outcomeCrimeCount[2][1]++;
+    } else if (outcome == outcomeCrimeCount[3][0]) {
+      outcomeCrimeCount[3][1]++;
+    } else if (outcome == outcomeCrimeCount[4][0]) {
+      outcomeCrimeCount[4][1]++;
+    } 
 
     var geojson = {
     type: 'FeatureCollection',

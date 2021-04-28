@@ -27,7 +27,7 @@ Rails.application.routes.draw do
 
   get 'account', to: 'session#account'
 
-  root 'main#home'
+  root 'session#new'
 
   get 'contact_us', to: 'contact#index'
   post 'contact_us', to: 'contact#create'
