@@ -69,3 +69,7 @@ gem 'bootstrap', '>= 4.6.0'
 gem 'chartkick'
 gem 'jquery-rails', '>= 4.4.0'
 gem 'json', '>= 2.5.1'
+gem 'twitter'
+
+gem "omniauth-twitter", "~> 1.4"
+gem "omniauth-rails_csrf_protection", "~> 1.0"
