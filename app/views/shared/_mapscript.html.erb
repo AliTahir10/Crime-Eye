@@ -25,6 +25,10 @@
     user_display_session.innerHTML = 'Logged in as: <%= link_to Current.user.email, account_path %>'
   <% end %>
 
+  <% if Current.twitter_user %>
+    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.twitter_user.email, account_path %>'
+  <% end %>
+
 
   mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
   var map = new mapboxgl.Map({

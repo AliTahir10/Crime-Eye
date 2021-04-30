@@ -20,6 +20,8 @@ class SessionController < ApplicationController
   # Logs out the user in current session
   def destroy
     session[:user_id] = nil
+    session[:twitter_user_id] = nil
+
     redirect_to login_path, notice: "You've logged out."
   end
 

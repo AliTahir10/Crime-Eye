@@ -1,6 +1,13 @@
 <h1>My Account</h1>
 <hr>
 
+<% if Current.user %>
 <h3>Greetings, <%= Current.user.email %>!</h3><br>
 
 <%= link_to 'Change password', edit_password_path %>
+<% end %>
+
+<% if Current.twitter_user %>
+  <h3>Greetings, <%= Current.twitter_user.name %>!</h3><br>
+  <h4>Enjoy your stay from Twitter!</h4>
+<% end %>
