@@ -7,7 +7,7 @@ class RegistrationController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: "You've successfully created your account!"
+      redirect_to main_home_path, notice: "You've successfully created your account!"
     else
       flash.now[:alert] = "Oh no, something went wrong."
       render :new
@@ -16,6 +16,6 @@ class RegistrationController < ApplicationController
 
   private
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation)
+    params.require(:user).permit(:email, :date_of_birth, :password, :password_confirmation)
   end
 end

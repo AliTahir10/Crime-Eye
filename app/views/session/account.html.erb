@@ -8,6 +8,6 @@
 <% end %>
 
 <% if Current.twitter_user %>
-  <h3>Greetings, <%= Current.twitter_user.name %>!</h3><br>
+  <h3>Greetings, <%= link_to "@#{Current.twitter_user.username}", "https://twitter.com/#{Current.twitter_user.username}", target: :_blank %>!</h3><br>
   <h4>Enjoy your stay from Twitter!</h4>
 <% end %>

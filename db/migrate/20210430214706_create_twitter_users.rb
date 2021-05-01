@@ -3,6 +3,7 @@ class CreateTwitterUsers < ActiveRecord::Migration[6.1]
     create_table :twitter_users do |t|
       t.string :provider
       t.string :uid
+      t.string :username
       t.string :name
       t.string :email
       t.string :token

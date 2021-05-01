@@ -11,6 +11,11 @@
   </div>
 
   <div class="mb-3">
+    <%= form.label :date_of_birth %>
+    <%= form.date_select :date_of_birth, start_year: 1900, end_year: Date.current.year, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
     <%= form.label :password %>
     <%= form.password_field :password, class: "form-control" %>
   </div>
@@ -24,6 +29,6 @@
     <%= form.submit "Sign up", class: "btn btn-primary" %>
   </div>
   <div class="mb-3">
-    <%= link_to "Already have an account? Login", login_path %>
+    <%= link_to "Already have an account? Login here.", login_path %>
   </div>
 <% end %>
