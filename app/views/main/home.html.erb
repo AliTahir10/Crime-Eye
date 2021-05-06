@@ -1,5 +1,11 @@
 <div id="map"></div>
-<button class="statsOpenbtn" onclick="openStats()">❯</button>
+<div class="sliders">
+  <ul>
+    <li class="statslist"><button class="statsopenbtn" onclick="openStats()">📊</button></li>
+    <li class="newslist"><button class="newsopenbtn" onclick="openNews()">📰</button></li>
+  </ul>
+</div>
+
 <div id="slideStats" class="statsbar">
   <div class="content">
     <div class="statsClose">
@@ -10,5 +16,16 @@
   </div>
 </div>
 
-<%= render "shared/loader" %> 
+<div id= "slideNews" class="newsbar">
+    <div class="newsClose">
+      <a href="javascript:void(0)" class="newsClosebtn" onclick="closeNews()">❰</a>
+    </div>
+    <div id="output" class="content">
+      <h1><strong>Live News</strong></h1>
+      <ul id=newsfeed></ul>
+    </div>
+</div>
+
+<%= render "shared/loader" %>
+<%= render "shared/newsbar" %>
 <%= render "shared/mapscript" %>

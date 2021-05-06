@@ -1,0 +1,48 @@
+<script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', function(){
+    getNews();
+    // when all content on page is loaded this calls the news api to fetch peridoically
+    startLiveUpdate();
+  });
+
+  function startLiveUpdate() {
+    setInterval(function() {
+      getNews();
+    }, 900000);
+  }
+
+  function openNewsBar() {
+    getNews();
+    openNews();
+  }
+
+  function getNews() {
+    const apiKey = ENV['NEWSAPI_KEY'];
+    const feed = document.getElementById("newsfeed");
+
+    var topic = "crime";
+    var path = `http://newsapi.org/v2/everything?q=${topic}&apiKey=${apiKey}`;
+
+    fetch(path)
+      .then(response => { return response.json()})
+      .then(data => {
+        console.log(data)
+        data.articles.forEach((article, i) => {
+          var li = document.createElement('li');
+          var img = document.createElement('img');
+          var a = document.createElement('a');
+          var p = document.createElement('p');
+          img.setAttribute('src', article.urlToImage);
+          a.setAttribute('href', article.url);
+          a.setAttribute('target', '_blank');
+          a.textContent = article.title;
+          p.textContent = article.description;
+          li.appendChild(img);
+          li.appendChild(a);
+          li.appendChild(p);
+          feed.appendChild(li);
+        });
+      })
+
+  }
+</script>

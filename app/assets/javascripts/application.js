@@ -24,6 +24,7 @@ function openNav() {
   document.getElementById("mySidebar").style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
   document.getElementById("slideStats").style.marginLeft = "250px";
+  document.getElementById("slideNews").style.marginLeft = "250px";
 }
 
 /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
@@ -31,6 +32,7 @@ function closeNav() {
   document.getElementById("mySidebar").style.width = "0";
   document.getElementById("main").style.marginLeft = "0";
   document.getElementById("slideStats").style.marginLeft = "0";
+  document.getElementById("slideNews").style.marginLeft = "0";
 }
 
 function openStats() {
@@ -39,4 +41,12 @@ function openStats() {
 
 function closeStats() {
   document.getElementById("slideStats").style.width = "0";
+}
+
+function openNews() {
+  document.getElementById("slideNews").style.width = "500px";
+}
+
+function closeNews() {
+  document.getElementById("slideNews").style.width = "0";
 }
