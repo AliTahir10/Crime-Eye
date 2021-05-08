@@ -2,7 +2,7 @@
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
   <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
 
-  <!-- Chart.js  -->
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
@@ -14,283 +14,318 @@
   <pre id='display-coordinates' class='ui-coordinates'></pre>
   <pre id='user-session' class='user-tracker'></pre>
 
-<script type="text/javascript">
-  var display_coords = document.getElementById('display-coordinates');
-  display_coords.innerHTML = 'Loading...';
+  <script type="text/javascript">
+    var display_coords = document.getElementById('display-coordinates');
+    display_coords.innerHTML = 'Loading...';
 
-  var user_display_session = document.getElementById('user-session');
-  user_display_session.innerHTML = 'Welcome to CrimeEye!';
+    var user_display_session = document.getElementById('user-session');
+    user_display_session.innerHTML = 'Welcome to CrimeEye!';
 
-  <% if Current.user %>
-    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.user.email, account_path %>'
-  <% end %>
+    <% if Current.user %>
+    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.user.email, account_path %>' <% end %>
 
-  <% if Current.twitter_user %>
-    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.twitter_user.email, account_path %>'
-  <% end %>
+    <% if Current.twitter_user %>
+    user_display_session.innerHTML = 'Logged in as: <%= link_to Current.twitter_user.email, account_path %>' <% end %>
 
+    mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
+    var map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/zcgqc/cklxud8l757yi17s5o4mccwo2',
+      center: [
+        -2.2, 54
+      ],
+      zoom: 5.0,
+      attributionControl: false
+    });
 
-  mapboxgl.accessToken = 'pk.eyJ1IjoiemNncWMiLCJhIjoiY2tsYTQ3bWtqMDEyYzJ1bzFybjVjaXB6OCJ9.kPb6ac3Uk9g_95LHiuFx8w';
-  var map = new mapboxgl.Map({
-    container: 'map',
-    style: 'mapbox://styles/zcgqc/cklxud8l757yi17s5o4mccwo2',
-    center: [-2.2, 54],
-    zoom: 5.0,
-    attributionControl: false
-  });
+    // Track mouse coordinates
+    map.on('mousemove', function (e) {
+      document.getElementById('display-coordinates').innerHTML = 'Tracking cursor: <br />' + JSON.stringify(e.point) + '<br />' + JSON.stringify(e.lngLat.wrap());
+    });
 
-  // Track mouse coordinates
-  map.on('mousemove', function (e) {
-    document.getElementById('display-coordinates').innerHTML = 'Tracking cursor: <br />' + JSON.stringify(e.point) + '<br />' + JSON.stringify(e.lngLat.wrap());
-  });
+    var coordinatesGeocoder = function (query) {
+      // Match anything which looks like decimal degrees coordinate pair.
+      var matches = query.match(/^[ ]*(?:Lng: )?(-?\d+\.?\d*)[, ]+(?:Lat: )?(-?\d+\.?\d*)[ ]*$/i);
+      if (!matches) {
+        return null;
+      }
 
-  // Add search box for locations
-  var geocoder = new MapboxGeocoder({
-    accessToken: mapboxgl.accessToken,
-    mapboxgl: mapboxgl,
-    placeholder: 'Search for...'
-  });
+      function coordinateFeature(lng, lat) {
+        return {
+          center: [
+            lng, lat
+          ],
+          geometry: {
+            type: 'Point',
+            coordinates: [lng, lat]
+          },
+          place_name: 'Lng: ' + lng + ' Lat: ' + lat,
+          place_type: ['coordinate'],
+          properties: {},
+          type: 'Feature'
+        };
+      }
 
-  map.addControl(geocoder);
+      var coord1 = Number(matches[1]);
+      var coord2 = Number(matches[2]);
+      var geocodes = [];
 
-  geocoder.on('result', function(searchResult) {
-    removeAllCurrentMarkers();
-    var coordinates = searchResult.result.geometry.coordinates;
-    var lng = coordinates[0];
-    var lat = coordinates[1];
+      if (coord1 < -90 || coord1 > 90) {
+        // must be lng, lat
+        geocodes.push(coordinateFeature(coord1, coord2));
+      }
 
-    fetch('https://data.police.uk/api/crime-last-updated')
-      .then(response => response.json())
-      .then(data => { fetchLocationAPI(getLocationAPI(lat, lng, data.date)); });
+      if (coord2 < -90 || coord2 > 90) {
+        // must be lat, lng
+        geocodes.push(coordinateFeature(coord2, coord1));
+      }
 
-    console.log(categoryCrimeCount[0][1].toString);
-  });
+      if (geocodes.length === 0) {
+        // else could be either lng, lat or lat, lng
+        geocodes.push(coordinateFeature(coord1, coord2));
+        geocodes.push(coordinateFeature(coord2, coord1));
+      }
 
-  // Add map navigation controls
-  map.addControl(
-    new mapboxgl.NavigationControl()
-  );
+      return geocodes;
+    };
 
-  // Add fullscreen button
-  map.addControl(
-    new mapboxgl.FullscreenControl()
-  );
+    // Add search box for locations
+    var geocoder = new MapboxGeocoder({accessToken: mapboxgl.accessToken, localGeocoder: coordinatesGeocoder, mapboxgl: mapboxgl, placeholder: 'Search for...'});
 
-  // Add a user geolocator button (gets user's current location)
-  var geolocate = new mapboxgl.GeolocateControl({
-    positionOptions: {
-      enableHighAccuracy: true
-    },
-    trackUserLocation: true,
-    // showAccuracyCircle overrides markers popup if set to true
-    showAccuracyCircle: false
-  });
+    map.addControl(geocoder);
 
-  map.addControl(geolocate);
-
-  // Check if coordinates are already found as we only need to place the markers once
-  // Otherwise our marker function would be continuously executed (and therefore worsen peformance)
-  var isFound = false;
-  // Listens to user interactions via geolocator - This will repeat approximately every 5 seconds
-  geolocate.on('geolocate', function(user) {
-    //console.log(user.coords);
-    var user_coords = user.coords;
-
-    if (isFound != true && user_coords != null) {
-      isFound = true;
+    geocoder.on('result', function (searchResult) {
       removeAllCurrentMarkers();
-      getUserCoordinates(user_coords);
+      var coordinates = searchResult.result.geometry.coordinates;
+      var lng = coordinates[0];
+      var lat = coordinates[1];
+
+      fetch('https://data.police.uk/api/crime-last-updated').then(response => response.json()).then(data => {
+        fetchLocationAPI(getLocationAPI(lat, lng, data.date));
+      });
+
+      console.log(categoryCrimeCount[0][1].toString);
+    });
+
+    // Add map navigation controls
+    map.addControl(new mapboxgl.NavigationControl());
+
+    // Add fullscreen button
+    map.addControl(new mapboxgl.FullscreenControl());
+
+    // Add a user geolocator button (gets user's current location)
+    var geolocate = new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      // showAccuracyCircle overrides markers popup if set to true
+      showAccuracyCircle: false
+    });
+
+    map.addControl(geolocate);
+
+    // Check if coordinates are already found as we only need to place the markers once Otherwise our marker function would be continuously executed (and therefore worsen peformance)
+    var isFound = false;
+    // Listens to user interactions via geolocator - This will repeat approximately every 5 seconds
+    geolocate.on('geolocate', function (user) {
+      //console.log(user.coords);
+      var user_coords = user.coords;
+
+      if (isFound != true && user_coords != null) {
+        isFound = true;
+        removeAllCurrentMarkers();
+        getUserCoordinates(user_coords);
+      }
+    });
+
+    // Gets users coordinates from geolocator interaction
+    function getUserCoordinates(obj) {
+      var lat = obj.latitude;
+      var lng = obj.longitude;
+
+      console.log(lat + ", " + lng);
+
+      fetch('https://data.police.uk/api/crime-last-updated').then(response => response.json()).then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
     }
-  });
 
-  // Gets users coordinates from geolocator interaction
-  function getUserCoordinates(obj) {
-    var lat = obj.latitude;
-    var lng = obj.longitude;
+    // ------------------------------------------------------------------------------
 
-    console.log(lat + ", " + lng);
+    // Stats Script:
 
+    var labels = [
+      "anti-social-behaviour",
+      "bicycle-theft",
+      "burglary",
+      "criminal-damage-arson",
+      "drugs",
+      "other-crime",
+      "other-theft",
+      "posession-of-weapons",
+      "public-order",
+      "robbery",
+      "shoplifting",
+      "theft-from-person",
+      "vehicle-crime",
+      "violent-crime"
+    ];
+    var colors = [
+      'rgba(255, 99, 132, 0.4)',
+      'rgba(255, 159, 64, 0.4)',
+      'rgba(255, 205, 86, 0.4)',
+      'rgba(75, 192, 192, 0.4)',
+      'rgba(54, 162, 235, 0.4)',
+      'rgba(214, 0, 61, 0.4)',
+      'rgba(201, 203, 207, 0.4)',
+      'rgba(21, 189, 55, 0.4)',
+      'rgba(255, 100, 120, 0.4)',
+      'rgba(168, 219, 0, 0.4)',
+      'rgba(153, 102, 255, 0.4)',
+      'rgba(230, 39, 255, 0.4)',
+      'rgba(80, 150, 100, 0.4)',
+      'rgba(255, 119, 0, 0.4)'
+    ];
+    var borderColors = [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)',
+      'rgb(255, 205, 86)',
+      'rgb(75, 192, 192)',
+      'rgb(54, 162, 235)',
+      'rgb(153, 102, 255)',
+      'rgb(201, 203, 207)',
+      'rgb(21, 189, 55)',
+      'rgb(255, 100, 120)',
+      'rgb(168, 219, 0)',
+      'rgb(153, 102, 255)',
+      'rgb(230, 39, 255)',
+      'rgb(80, 150, 100)',
+      'rgb(255, 119, 0)'
+    ];
+
+    var outcomeLabels = ["awaiting-court-result", "no-further-action", "under-investigation", "local-resolution", "unknown"];
+
+    // Check latest crime data date
     fetch('https://data.police.uk/api/crime-last-updated')
-      .then(response => response.json())
-      .then(data => fetchLocationAPI(getLocationAPI(lat, lng, data.date)));
-  }
-
-//------------------------------------------------------------------------------
-
-  // Stats Script:
-
-  var labels = [
-  "anti-social-behaviour",
-  "bicycle-theft",
-  "burglary",
-  "criminal-damage-arson",
-  "drugs",
-  "other-crime",
-  "other-theft",
-  "posession-of-weapons",
-  "public-order",
-  "robbery",
-  "shoplifting",
-  "theft-from-person",
-  "vehicle-crime",
-  "violent-crime"
-  ];
-  var colors = [
-    'rgba(255, 99, 132, 0.4)',
-    'rgba(255, 159, 64, 0.4)',
-    'rgba(255, 205, 86, 0.4)',
-    'rgba(75, 192, 192, 0.4)',
-    'rgba(54, 162, 235, 0.4)',
-    'rgba(214, 0, 61, 0.4)',
-    'rgba(201, 203, 207, 0.4)',
-    'rgba(21, 189, 55, 0.4)',
-    'rgba(255, 100, 120, 0.4)',
-    'rgba(168, 219, 0, 0.4)',
-    'rgba(153, 102, 255, 0.4)',
-    'rgba(230, 39, 255, 0.4)',
-    'rgba(80, 150, 100, 0.4)',
-    'rgba(255, 119, 0, 0.4)'
-    ];
-  var borderColors = [
-    'rgb(255, 99, 132)',
-    'rgb(255, 159, 64)',
-    'rgb(255, 205, 86)',
-    'rgb(75, 192, 192)',
-    'rgb(54, 162, 235)',
-    'rgb(153, 102, 255)',
-    'rgb(201, 203, 207)',
-    'rgb(21, 189, 55)',
-    'rgb(255, 100, 120)',
-    'rgb(168, 219, 0)',
-    'rgb(153, 102, 255)',
-    'rgb(230, 39, 255)',
-    'rgb(80, 150, 100)',
-    'rgb(255, 119, 0)'
-    ];
-
-  var outcomeLabels = [
-    "awaiting-court-result",
-    "no-further-action",
-    "under-investigation",
-    "local-resolution",
-    "unknown"
-  ];
-
-  // Check latest crime data date
-  fetch('https://data.police.uk/api/crime-last-updated')
     // parses JSON response into a JS object literal
-    .then(response => response.json())
-    .then(data => { displayDate(data); });
+      .then(response => response.json()).then(data => {
+      displayDate(data);
+    });
 
-  function displayDate(data) {
-    var mainContainer = document.getElementById("myDate");
-    mainContainer.innerHTML = '';
-    var p = document.createElement("div");
-    p.innerHTML = 'Last updated: ' + data.date;
-    mainContainer.appendChild(p);
-  }
+    function displayDate(data) {
+      var mainContainer = document.getElementById("myDate");
+      mainContainer.innerHTML = '';
+      var p = document.createElement("div");
+      p.innerHTML = 'Last updated: ' + data.date;
+      mainContainer.appendChild(p);
+    }
 
-  //Stats Charts
-  function refreshGraph() {
-    var barData = [
-      categoryCrimeCount[0][1],
-      categoryCrimeCount[1][1],
-      categoryCrimeCount[2][1],
-      categoryCrimeCount[3][1],
-      categoryCrimeCount[4][1],
-      categoryCrimeCount[5][1],
-      categoryCrimeCount[6][1],
-      categoryCrimeCount[7][1],
-      categoryCrimeCount[8][1],
-      categoryCrimeCount[9][1],
-      categoryCrimeCount[10][1],
-      categoryCrimeCount[11][1],
-      categoryCrimeCount[12][1],
-      categoryCrimeCount[13][1]
+    //Stats Charts
+    function refreshGraph() {
+      var barData = [
+        categoryCrimeCount[0][1],
+        categoryCrimeCount[1][1],
+        categoryCrimeCount[2][1],
+        categoryCrimeCount[3][1],
+        categoryCrimeCount[4][1],
+        categoryCrimeCount[5][1],
+        categoryCrimeCount[6][1],
+        categoryCrimeCount[7][1],
+        categoryCrimeCount[8][1],
+        categoryCrimeCount[9][1],
+        categoryCrimeCount[10][1],
+        categoryCrimeCount[11][1],
+        categoryCrimeCount[12][1],
+        categoryCrimeCount[13][1]
       ];
 
-    var doughnutData = [
-      outcomeCrimeCount[0][1],
-      outcomeCrimeCount[1][1],
-      outcomeCrimeCount[2][1],
-      outcomeCrimeCount[3][1],
-      outcomeCrimeCount[4][1]
-    ];
+      var doughnutData = [
+        outcomeCrimeCount[0][1],
+        outcomeCrimeCount[1][1],
+        outcomeCrimeCount[2][1],
+        outcomeCrimeCount[3][1],
+        outcomeCrimeCount[4][1]
+      ];
 
+      var canvasWrapper = document.getElementById("canvasWrapper");
+      canvasWrapper.innerHTML = '';
 
-    var canvasWrapper = document.getElementById("canvasWrapper");
-    canvasWrapper.innerHTML = '';
-
-    // bar chart
-    var barCanvas = document.createElement('canvas');
-    barCanvas.setAttribute('width', 400);
-    barCanvas.setAttribute('height', 250);
-    barCanvas.setAttribute('id', "barChart");
-    canvasWrapper.appendChild(barCanvas);
-    var barChart = new Chart(barCanvas, {
-      type: 'bar',
-      data:{
-        labels: labels,
-        datasets: [{
-          data: barData,
-          backgroundColor: colors,
-          borderColor: borderColors,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        title: {
-          text: "Crime Counts",
-          display: true
-        },
-        legend: {
-          display: false
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-                beginAtZero:true
+      // bar chart
+      var barCanvas = document.createElement('canvas');
+      barCanvas.setAttribute('width', 400);
+      barCanvas.setAttribute('height', 250);
+      barCanvas.setAttribute('id', "barChart");
+      canvasWrapper.appendChild(barCanvas);
+      var barChart = new Chart(barCanvas, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              data: barData,
+              backgroundColor: colors,
+              borderColor: borderColors,
+              borderWidth: 1
             }
-        }]
-        }
-      }
-    });
-
-    // doughnut chart
-    var doughnutCanvas = document.createElement('canvas');
-    doughnutCanvas.setAttribute('width', 400);
-    doughnutCanvas.setAttribute('height', 250);
-    doughnutCanvas.setAttribute('id', "doughnutChart");
-    canvasWrapper.appendChild(doughnutCanvas);
-    var doughnutChart = new Chart(doughnutCanvas, {
-      type: 'doughnut',
-      data:{
-        labels: outcomeLabels,
-        datasets: [{
-          data: doughnutData,
-          backgroundColor: colors,
-          borderColor: borderColors,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        title: {
-          text: "Outcome Counts",
-          display: true
+          ]
         },
-        scales: {
-          yAxes: [{
-            ticks: {
-                beginAtZero:true
-            }
-        }]
+        options: {
+          title: {
+            text: "Crime Counts",
+            display: true
+          },
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
         }
-      }
-    });
+      });
 
-  }
+      // doughnut chart
+      var doughnutCanvas = document.createElement('canvas');
+      doughnutCanvas.setAttribute('width', 400);
+      doughnutCanvas.setAttribute('height', 250);
+      doughnutCanvas.setAttribute('id', "doughnutChart");
+      canvasWrapper.appendChild(doughnutCanvas);
+      var doughnutChart = new Chart(doughnutCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: outcomeLabels,
+          datasets: [
+            {
+              data: doughnutData,
+              backgroundColor: colors,
+              borderColor: borderColors,
+              borderWidth: 1
+            }
+          ]
+        },
+        options: {
+          title: {
+            text: "Outcome Counts",
+            display: true
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                }
+              }
+            ]
+          }
+        }
+      });
 
-</script>
+    }
+  </script>
 </div>
 
 <%= javascript_include_tag 'jsonmarkers' %>

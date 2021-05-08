@@ -19,7 +19,11 @@
   function getNews() {
     const feed = document.getElementById("newsfeed");
 
-    <% @sources.each do |article| %>
+    <% @newsBatch.each do |article| %>
+        // Not sure why rails is converting punctuation to HTML character codes
+        // This solves the problem for now
+        var articleTitle = '<%= article.title %>'.replaceAll("&#39;","'").replaceAll("&quot;", "'");
+        var articleDescription = '<%= article.description %>'.replaceAll("&#39;","'").replaceAll("&quot;", "'");
 
         var li = document.createElement('li');
         var img = document.createElement('img');
@@ -29,15 +33,15 @@
         img.setAttribute('src', '<%= article.urlToImage %>');
         a.setAttribute('href', '<%= article.url %>');
         a.setAttribute('target', '_blank');
-        a.textContent = '<%= article.title %>';
-        p.textContent = '<%= article.description %>';
-        published.textContent = 'Published: <%= article.publishedAt %>';
+        a.textContent = articleTitle;
+        p.textContent = articleDescription;
+        // published.textContent = 'Published: <%= article.publishedAt %>';
         li.appendChild(img);
         li.appendChild(a);
         li.appendChild(p);
-        li.appendChild(published);
+        // li.appendChild(published);
         feed.appendChild(li);
-        
+
     <% end %>
   }
 

@@ -2,8 +2,8 @@
 
 Rails.application.routes.draw do
   get 'registration/new'
-  get 'json/police_api'
-  get 'json/twitter_api'
+  # get 'json/police_api'
+  # get 'json/twitter_api'
   get 'main/home'
   get 'main/about'
   get 'main/emergency'

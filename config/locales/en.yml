@@ -24,17 +24,24 @@ en:
 
   app_name: 'CrimeEye'
   introduction_heading: 'Introduction to CrimeEye'
-  introduction_text: 'CrimeEye is a UK crime tracking website that allows users to check how populated different crimes are in different neighbouring areas. UK crime data is collected from
-  <a href="https://data.police.uk/docs/%22%3EPoliceAPI">PoliceAPI</a> which is made freely accessible to the public, our map is built from <a href="https://docs.mapbox.com/api/overview/%22%3EMapBoxAPI">MapBox</a>
-  to provide users an interactive and searchable map, and anything twitter related is used with <a href="https://developer.twitter.com/en/docs/twitter-api%22%3ETwitter">TwitterAPI</a>.'
+  introduction_text: 'CrimeEye is a UK informational crime tracking website that allows users to check how populated crimes are in different neighbouring areas. UK crime data is collected from
+  <a href="https://data.police.uk/">PoliceAPI</a> which is made freely accessible to the public, our map is built from <a href="https://www.mapbox.com/">MapBox</a>
+  to provide users an interactive and searchable map, our twitter login system is used with <a href="https://developer.twitter.com/en">TwitterAPI</a>, and our real-time news is provided by
+  <a href="https://newsapi.org/">NewsAPI</a>.'
   general_use_heading: 'General Use'
-  general_use_text: 'CrimeEye is used to convey specific, helpful information related to crime in UK areas you search for or for finding crimes in your local area. Users are able to create an account to
-  further tailor their experience, which can include linking their twitter account, and show information relevant to them.'
+  general_use_text: 'CrimeEye is used to convey specific and helpful information related to crime in UK areas you search for or for finding crimes in your current local area. Users are able to create an account by either
+  creating a local account or signing in with their Twitter account. An account must be signed in to be able to access our interactive map as part of our age-restriction policy. Users must be 13 years or older to access our map.'
   general_use_disclaimer: 'Disclaimer notice: We strongly do not encourage users to actively seekout crime in real-life and therefore take no reponsibility in the outcomes of personal injuries or liabilites with the usage
   of this website.'
+  instructional_usage_heading: 'Instructional Usage'
+  instructional_usage_text: 'Users are able to search for crime data in specific UK locations using our geocoder search bar, once an area is searched a list of valid UK areas will be returned in a selectable list in which the user must select
+  an area.<p>A list of markers on the map will be generated, where each individual marker represents one crime that has occurred. Clicking on the marker will provider an informational pop-up that will show more information relating to this single crime.
+  </p><p>If users wish to search for more precise locations, our geocoder search bar allows the inputs of longitude and latitude coordinate pairs in the form of [Lng, Lat]. For example, if users wished to search for a longitude of -0.5 and a latitude of 50 it will
+  be entered as "-0.5, 50" in the geocoder search bar.</p><p>We offer a mouse cursor tracker at the bottom-left of the map, which provides the current coordinates of the map using the cursor&#39;s current position relative to the map&#39;s geometric position to assist
+  users in finding a specific pair of coordinates on the map.</p>'
   why_use_heading: 'Why use CrimeEye?'
-  why_use_text: 'CrimeEye aims to assist users with up-to-date crime data gathering, we want to provide in-depth awareness in statistical crime analysis through the usage of data analysis, including but not limited to: visual graphs displaying
-  popular and tracked crimes, map coordinates of previous crime locations, legal outcomes of individual witness reports, news associated with recent crimes etc. '
+  why_use_text: 'CrimeEye aims to assist users with up-to-date crime data gathering, we aim to provide social awareness in crime activities through the usage of statistical crime data analysis, including but not limited to: visual graphs displaying
+  popular and tracked crimes, map coordinates of previous crime locations, legal outcomes of individual witness reports, real-time news associated with recent crimes etc. '
   author_heading: 'Who made this website?'
   author_list: 'CrimeEye is made by a team of students in the UK as part of our university project:'
   authors: '<li>Andy Lee</li><li>Ali Tahir</li><li>Louise Arthur</li><li>Louis Dineen</li><li>Namanpreet Ghotra</li><li>Nikola Delchev</li><li>Tamim Almahdi</li>'
