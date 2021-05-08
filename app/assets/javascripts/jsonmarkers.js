@@ -108,7 +108,7 @@ function useAPIData(data) {
     var category = data[i].category;
     var street = data[i].location.street.name;
     var date = data[i].month;
-    console.log(date);
+    //onsole.log(date);
     var outcome;
 
     if (data[i].outcome_status != null) {
@@ -127,7 +127,7 @@ function useAPIData(data) {
       outcomeCrimeCount[3][1]++;
     } else if (outcome == outcomeCrimeCount[4][0]) {
       outcomeCrimeCount[4][1]++;
-    } 
+    }
 
     var geojson = {
     type: 'FeatureCollection',

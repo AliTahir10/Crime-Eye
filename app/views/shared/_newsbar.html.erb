@@ -17,16 +17,15 @@
   }
 
   function getNews() {
-    const apiKey = ENV['NEWSAPI_KEY'];
+    const newsApiKey = '<%= ENV['NEWSAPI_KEY'] %>';
     const feed = document.getElementById("newsfeed");
 
-    var topic = "crime";
-    var path = `http://newsapi.org/v2/everything?q=${topic}&apiKey=${apiKey}`;
+    var path = 'http://newsapi.org/v2/everything?q=crime+uk+arrested&apiKey=' + newsApiKey;
 
     fetch(path)
       .then(response => { return response.json()})
       .then(data => {
-        console.log(data)
+        //console.log(data)
         data.articles.forEach((article, i) => {
           var li = document.createElement('li');
           var img = document.createElement('img');
@@ -43,6 +42,5 @@
           feed.appendChild(li);
         });
       })
-
   }
 </script>

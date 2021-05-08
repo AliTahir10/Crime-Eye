@@ -25,7 +25,6 @@ Rails.application.routes.draw do
 
   get '/auth/twitter/callback', to: 'omniauth_callbacks#create'
 
-
   get 'account', to: 'session#account'
 
   root 'session#new'
