@@ -21,8 +21,6 @@
 
     <% @sources.each do |article| %>
 
-        console.log('<%= article.title %>');
-
         var li = document.createElement('li');
         var img = document.createElement('img');
         var a = document.createElement('a');
@@ -39,7 +37,7 @@
         li.appendChild(p);
         li.appendChild(published);
         feed.appendChild(li);
-
+        
     <% end %>
   }
 
