@@ -17,30 +17,30 @@
   }
 
   function getNews() {
-    const newsApiKey = '<%= ENV['NEWSAPI_KEY'] %>';
     const feed = document.getElementById("newsfeed");
 
-    var path = 'http://newsapi.org/v2/everything?q=crime+uk+arrested&apiKey=' + newsApiKey;
+    <% @sources.each do |article| %>
 
-    fetch(path)
-      .then(response => { return response.json()})
-      .then(data => {
-        //console.log(data)
-        data.articles.forEach((article, i) => {
-          var li = document.createElement('li');
-          var img = document.createElement('img');
-          var a = document.createElement('a');
-          var p = document.createElement('p');
-          img.setAttribute('src', article.urlToImage);
-          a.setAttribute('href', article.url);
-          a.setAttribute('target', '_blank');
-          a.textContent = article.title;
-          p.textContent = article.description;
-          li.appendChild(img);
-          li.appendChild(a);
-          li.appendChild(p);
-          feed.appendChild(li);
-        });
-      })
+        console.log('<%= article.title %>');
+
+        var li = document.createElement('li');
+        var img = document.createElement('img');
+        var a = document.createElement('a');
+        var p = document.createElement('p');
+        var published = document.createElement('p');
+        img.setAttribute('src', '<%= article.urlToImage %>');
+        a.setAttribute('href', '<%= article.url %>');
+        a.setAttribute('target', '_blank');
+        a.textContent = '<%= article.title %>';
+        p.textContent = '<%= article.description %>';
+        published.textContent = 'Published: <%= article.publishedAt %>';
+        li.appendChild(img);
+        li.appendChild(a);
+        li.appendChild(p);
+        li.appendChild(published);
+        feed.appendChild(li);
+
+    <% end %>
   }
+
 </script>
