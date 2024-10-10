@@ -4,6 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.3.5'
 
 gem 'dotenv-rails', groups: %i[development test]
+gem 'rails_12factor', group: :production
 gem 'mail_form'
 gem 'globalid', '~> 1.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
