@@ -1,16 +1,16 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.0.0'
+ruby '3.3.5'
 
 gem 'dotenv-rails', groups: %i[development test]
 gem 'mail_form'
-
+gem 'globalid', '~> 1.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '~> 5.2.4', '>= 5.2.4.5'
 gem 'rails', '~> 6.1.3', '>= 6.1.3.1'
-# Use pg as the database for Active Record
-gem 'pg', '~> 1.1'
+# Use sqlite3 as the database for Active Record
+gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -33,7 +33,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
-
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
@@ -66,11 +65,13 @@ end
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootstrap', '>= 4.6.0'
+gem 'dartsass-sprockets'
 gem 'chartkick'
 gem 'jquery-rails', '>= 4.4.0'
 gem 'json', '>= 2.5.1'
 gem 'twitter'
 gem 'news-api'
+gem 'tzinfo-data'
 
 gem "omniauth-twitter", "~> 1.4"
 gem "omniauth-rails_csrf_protection", "~> 1.0"
