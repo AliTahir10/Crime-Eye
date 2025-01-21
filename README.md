@@ -1,2 +1,2 @@
 # README
-https://crime-eye.herokuapp.com/
+https://crime-eye.com/
